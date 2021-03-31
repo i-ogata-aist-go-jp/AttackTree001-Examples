@@ -1,0 +1,131 @@
+% Authors : Barbara Kordy (barbara.kordy@uni.lu)
+%           Patrick Schweitzer (patrick.schweitzer@uni.lu)
+% Date : 25/06/2012
+% (c) 2012 University of Luxembourg - Interdisciplinary Centre for Security 
+% Reliability and Trust (SnT)
+% All rights reserved
+
+\documentclass{article}
+
+\usepackage{ADT_web}
+\usepackage[labelformat=empty]{caption}
+\pagestyle{empty}
+
+%------------------------------------------------------------------------------
+\begin{document}
+
+\begin{figure}[htb]
+\centering
+\psset{treesep=0.5cm}
+\psscalebox{0.66}{
+\pstree[levelsep=58pt,treesep=0.5cm]{\NodeA{Bank\\ Account}}
+{\pstree{\NNodeA{ATM}{ATM}}{
+	\pstree{\NNodeA{PIN}{PIN}}{}
+	\NNodeA{Card}{Card}{}
+}
+
+\pstree{ 
+\NNodeA{Online}{Online}}{
+\pstree{\NNodeA{Password}{Password}}{
+}
+\NNodeA{User}{User Name} {}
+
+\Arc{ATM}{PIN}{Card}
+\Arc{Online}{Password}{User}
+}
+}
+%Legend
+\rput(1.5,0){
+  \begin{tabular}{|cl|}
+  \hline
+  \hspace{1ex}$\ACC$ & attack node\\
+  \hspace{2ex}\psline[linewidth=0.5pt](0,.3)(-.3,0)
+    \psline[linewidth=0.5pt](0,.3)(-.1,0)
+    \psline[linewidth=0.5pt](0,.3)(.1,0)
+    & disjunctive refinement\\
+  \hspace{2ex}\psline[linewidth=0.5pt](0,.3)(-.3,0)
+    \psline[linewidth=0.5pt](0,.3)(-.1,0)
+    \psline[linewidth=0.5pt](0,.3)(.1,0)
+    \psarc[linewidth=0.5pt](0,.3){0.2cm}{225}{288}
+    & conjunctive refinement\\
+  \hline
+  \end{tabular}
+  }
+}
+\caption{How to steal money from a bank account?}
+\label{fig:bankAccount}
+\end{figure}
+
+
+
+%------------------------------------------------------------------------------
+
+\begin{figure}[htb]
+\centering
+\psset{treesep=0.5cm}
+\psscalebox{0.66}{
+\pstree[levelsep=58pt,treesep=0.5cm]
+{\NNodeA{BA}{Bank\\ Account}}
+{
+	\pstree{\NNodeA{PIN}{PIN   $=$ \\  Password}} {}
+	\pstree{\NNodeA{AtmOn}{ATM or  \\ Online}} {
+		\NodeA{Card} 
+		\NodeA{UserName}}
+}
+
+\Arc{BA}{PIN}{AtmOn}
+}
+\caption{In case PIN =  Password?}
+\label{fig:bankAccountDist}
+\end{figure}
+
+\begin{figure}[htb]
+\centering
+\psscalebox{0.9}{
+\pstree[levelsep=80pt]{\NNodeA{rsuqwuruvt}
+{Open Safe}}{
+	\pstree{\NNodeA{rxytqsussz}{Brute \\  force }} {}
+	
+
+\pstree{\NNodeA{rvvtsvzyuw}{Get key}}{
+\pstree{\NNodeA{wrzrztswq}{Steal Key}}{
+}
+
+\pstree{\NNodeA{xvtwxuvy}{Copy key}}{
+}
+
+\pstree{\NNodeA{rytszzyvst}{Return\\key}}{
+}
+
+}
+\Bogen{rvvtsvzyuw}{wrzrztswq}{rytszzyvst}
+}
+
+
+%Legend
+\rput(2,0){
+  \begin{tabular}{|cl|}
+  \hline
+  \hspace{1ex}$\ACC$ & attack node\\
+%  \hspace{1ex}$\DCC$ & defense node\\
+  \hspace{2ex}\psline[linewidth=0.5pt](0,.3)(-.3,0)
+    \psline[linewidth=0.5pt](0,.3)(-.1,0)
+    \psline[linewidth=0.5pt](0,.3)(.1,0)
+    & disjunctive refinement\\
+  \hspace{2ex}\psline[linewidth=0.5pt](0,.3)(-.3,0)
+    \psline[linewidth=0.5pt](0,.3)(-.1,0)
+    \psline[linewidth=0.5pt](0,.3)(.1,0)
+    \psarc[linewidth=0.5pt](0,.3){0.2cm}{225}{288}
+    & conjunctive refinement\\
+%  \hspace{1ex}\psline[linewidth=1pt,linestyle=dotted](0,.25)(0,-.05)
+%   & countermeasure\\
+  \hline
+  \end{tabular}
+  }
+}
+\caption{How to open a vault?}
+\label{fig:exBoolean}
+\end{figure} 
+
+
+\end{document}

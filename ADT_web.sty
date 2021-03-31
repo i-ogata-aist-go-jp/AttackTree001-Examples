@@ -1,0 +1,954 @@
+% Author : Patrick Schweitzer (patrick.schweitzer@uni.lu)
+% Date : 05/11/2012
+% (c) 2012 University of Luxembourg - Interdisciplinary Centre for Security 
+% Reliability and Trust (SnT)
+% All rights reserved
+
+%------------------------------------------------------------------------------
+% Needed packages
+\usepackage[T1]{fontenc} 
+\usepackage{color} 
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{stmaryrd} 
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{pst-3d}
+\usepackage{pst-tree}
+\usepackage{pst-all}
+
+
+%------------------------------------------------------------------------------
+%Size of standard Nodes
+\newlength{\pbs}
+%\settowidth{\pbs}{Memorize}
+\setlength{\pbs}{1.5cm}
+% The two previous commands allow to handle the size of the node by simply 
+%changing the lenght of pbs. Right now it is set to the lenght of the work 
+%Memorize. 
+
+\newlength{\corner}
+\setlength{\corner}{0.1cm} 
+%\settowidth{\corner}{} %Use this to remove the round corners
+%Same as above, this command sets the radius of the corners.
+
+
+%------------------------------------------------------------------------------
+%Standard nodes
+
+%\NodeA{arg1}
+%\NodeB{arg1}
+%\NodeAC{arg1}
+%\NodeBC{arg1}
+
+%\NodeGAL{Node GAL}
+%\NodeGAD{Node GAD}
+%\NodeGBL{Node GBL}
+%\NodeGBD{Node GBD}
+
+%\NodeU{arg1}
+%\NodeUL{arg1}
+%\NodeUD{arg1}
+%\NodeGen{arg1}
+%\NodeTri
+
+%\NodeAT{arg1}{arg2}
+%\NodeBT{arg1}{arg2}
+%\NodeACT{arg1}{arg2}
+%\NodeBCT{arg1}{arg2}
+
+
+\newcommand{\NodeA}[1]{\TCircle[radius=0.6\pbs,linecolor=red,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\centering\shortstack{#1}}}
+
+\newcommand{\NodeAC}[1]{\TCircle[radius=0.6\pbs,linecolor=red,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\centering\shortstack{#1}}}
+
+\newcommand{\NodeB}[1]{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\psframebox[linearc=\corner,
+cornersize=absolute,linecolor=green,linewidth=2pt]{\parbox[c]{\pbs}
+{\centering\shortstack{#1}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NodeBC}[1]{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\psframebox[linearc=\corner,
+cornersize=absolute,linecolor=green,linewidth=2pt]
+{\parbox[c]{\pbs}{\centering\shortstack{#1}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NodeU}[1]{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linecolor=white,linewidth=1pt]}]
+{\psframebox[linecolor=black,linestyle=none,
+linewidth=2pt]{\parbox[c]{\pbs}{\centering\shortstack{\black{#1}}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NodeUL}[1]{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linecolor=black]}]{\psframebox[linecolor=black, 
+linestyle=none,linewidth=2pt]
+{\parbox[c]{\pbs}{\centering\shortstack{\black{#1}}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NodeUD}[1]{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linecolor=black,linewidth=2pt,linestyle=dotted]}]
+{\psframebox[linecolor=black,linestyle=none,linewidth=2pt]{\parbox[c]{\pbs}
+{\centering\shortstack{\black{#1}}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NodeGBL}[1]{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linecolor=lightgray]}]{\psframebox[linearc=\corner,
+cornersize=absolute,linecolor=lightgray,
+linewidth=2pt]{\parbox[c]{\pbs}{\centering\lightgray{\shortstack{#1}}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NodeGBD}[1]{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linecolor=lightgray,linewidth=2pt,linestyle=dotted]}]
+{\psframebox[linearc=\corner,cornersize=absolute, 
+linecolor=lightgray,linewidth=2pt]{\parbox[c]{\pbs}
+{\centering\lightgray{\shortstack{#1}}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NodeGAL}[1]{\TCircle[radius=0.6\pbs,linecolor=lightgray,linewidth=2pt,
+edge={\ncline[linecolor=lightgray,linewidth=1pt,linestyle=solid]}]
+{\centering\lightgray{\shortstack{#1}}}}
+
+\newcommand{\NodeGAD}[1]{\TCircle[radius=0.6\pbs,linecolor=lightgray,linewidth=2pt,
+edge={\ncline[linecolor=lightgray,linewidth=2pt,linestyle=dotted]}]
+{\centering\lightgray{\shortstack{#1}}}}
+
+\newcommand{\NodeGen}[1]{\Ttri[radius=0.6\pbs,linecolor=cyan,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\centering\shortstack{#1}}}
+
+\newcommand{\NodeTri}[0]{\Tfan[linewidth=2pt,linecolor=black,fansize=\pbs]}
+
+\newcommand{\NodeAT}[2]{
+\pstree{\TCircle[radius=0.6\pbs,linecolor=red,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\centering\shortstack{#1}}}
+{\pstree[thislevelsep=-.2,linestyle=none]
+{\Tfan[cornersize=absolute,linearc=\corner,
+linewidth=2pt,linecolor=black,fansize=1.3\pbs]}{
+\Tr{\centering\shortstack{#2}}
+}}
+}
+
+\newcommand{\NodeACT}[2]{
+\pstree{\TCircle[radius=0.6\pbs,linecolor=red,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\shortstack{#1}}}
+{\pstree[thislevelsep=-.2,linestyle=none]
+{\Tfan[cornersize=absolute,linearc=\corner,
+linewidth=2pt,linecolor=black,fansize=1.3\pbs]}{
+\Tr{\centering\shortstack{#2}}
+}}
+}
+
+\newcommand{\NodeBT}[2]{
+\pstree{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{\pbs}{\centering\shortstack{#1}}}}
+\psset{linecolor=black}}
+{\pstree[thislevelsep=-.2,linestyle=none]{\Tfan[cornersize=absolute, 
+linearc=\corner,linewidth=2pt,linecolor=black,fansize=1.3\pbs]}{
+\Tr{\centering\shortstack{#2}}
+}}
+}
+
+\newcommand{\NodeBCT}[2]{
+\pstree{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{\pbs}{\centering\shortstack{#1}}}}
+\psset{linecolor=black}}
+{\pstree[thislevelsep=-.2,linestyle=none]{\Tfan[cornersize=absolute, 
+linearc=\corner,linewidth=2pt,linecolor=black,fansize=1.3\pbs]}{
+\Tr{\centering\shortstack{#2}}
+}}
+}
+
+
+%------------------------------------------------------------------------------
+% Smaller nodes
+
+%\NodeAsmall{arg1}
+%\NodeACsmal{arg1}l
+%\NodeBsmall{arg1}
+%\NodeBCsmall{arg1}
+
+%\NodeATsmall{arg1}{arg2}
+%\NodeACTsmall{arg1}{arg2}
+%\NodeBTsmall{arg1}{arg2}
+%\NodeBCTsmall{arg1}{arg2}
+
+\newcommand{\NodeAsmall}[1]{\TCircle[radius=0.3\pbs,linecolor=red,
+linewidth=2pt,edge={\ncline[linewidth=1pt,linestyle=solid]}]
+{\centering\shortstack{ #1}}}
+
+\newcommand{\NodeACsmall}[1]{\TCircle[radius=0.3\pbs,linecolor=red,
+linewidth=2pt,edge={\ncline[linewidth=2pt,linestyle=dotted]}]
+{\shortstack{ #1}}}
+
+\newcommand{\NodeBsmall}[1]{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{0.5\pbs}{\centering\shortstack{#1}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NodeBCsmall}[1]{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{0.5\pbs}{\centering\shortstack{#1}}}}
+\psset{linecolor=black}}
+
+
+\newcommand{\NodeATsmall}[2]{
+\pstree{\TCircle[radius=0.3\pbs,linecolor=red,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\centering\shortstack{#1}}}
+{\pstree[thislevelsep=-.2,linestyle=none]
+{\Tfan[cornersize=absolute,linearc=\corner,
+linewidth=2pt,linecolor=black,fansize=0.65\pbs]}{
+\Tr{\centering\shortstack{#2}}
+}}
+}
+
+
+\newcommand{\NodeACTsmall}[2]{
+\pstree{\TCircle[radius=0.3\pbs,linecolor=red,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\shortstack{#1}}}
+{\pstree[thislevelsep=-.2,linestyle=none]
+{\Tfan[cornersize=absolute,linearc=\corner,
+linewidth=2pt,linecolor=black,fansize=0.65\pbs]}{
+\Tr{\centering\shortstack{#2}}
+}}
+}
+
+\newcommand{\NodeBTsmall}[2]{
+\pstree{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{.5\pbs}{\centering\shortstack{#1}}}}
+\psset{linecolor=black}}
+{\pstree[thislevelsep=-.2,linestyle=none]{\Tfan[cornersize=absolute, 
+linearc=\corner,linewidth=2pt,linecolor=black,fansize=.65\pbs]}{
+\Tr{\centering\shortstack{#2}}
+}}
+}
+
+\newcommand{\NodeBCTsmall}[2]{
+\pstree{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{.5\pbs}{\centering\shortstack{#1}}}}
+\psset{linecolor=black}}
+{\pstree[thislevelsep=-.2,linestyle=none]{\Tfan[cornersize=absolute, 
+linearc=\corner,linewidth=2pt,linecolor=black,fansize=.65\pbs]}{
+\Tr{\centering\shortstack{#2}}
+}}
+}
+
+\newcommand{\NodeULsmall}[1]{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linecolor=black]}]{\psframebox[linecolor=white,
+linewidth=2pt]{\parbox[c]{0.5\pbs}{\centering\shortstack{\black{#1}}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NodeUDsmall}[1]{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linecolor=black,linewidth=2pt,linestyle=dotted]}]
+{\psframebox[linecolor=white,linewidth=2pt]{\parbox[c]{0.5\pbs}
+{\centering\shortstack{\black{#1}}}}}
+\psset{linecolor=black}}
+
+%------------------------------------------------------------------------------
+% Adjustable
+
+%\NodeAa{arg1}{arg2}
+%\NodeACa{arg1}{arg2}
+%\NodeBa{arg1}{arg2}
+%\NodeBCa{arg1}{arg2}
+
+%\NodeUa{arg1}{arg2}
+%\NodeULa{arg1}{arg2}
+%\NodeUDa{arg1}{arg2}
+
+%\NodeATa{arg1}{arg2}{arg3}{arg4}
+%\NodeACTa{arg1}{arg2}{arg3}{arg4}
+%\NodeBTa{arg1}{arg2}{arg3}{arg4}
+%\NodeBCTa{arg1}{arg2}{arg3}{arg4}
+
+
+\newcommand{\NodeAa}[2]{\TCircle[radius=#1,linecolor=red,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\centering\shortstack{#2}}}
+
+\newcommand{\NodeACa}[2]{\TCircle[radius=#1,linecolor=red,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\centering\shortstack{#2}}}
+
+\newcommand{\NodeBa}[2]{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\psframebox[linearc=\corner,
+cornersize=absolute,linecolor=green,
+linewidth=2pt]{\parbox[c]{#1}{\centering\shortstack{#2}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NodeBCa}[2]{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\psframebox[linearc=\corner,
+cornersize=absolute,linecolor=green,
+linewidth=2pt]{\parbox[c]{#1}{\centering\shortstack{#2}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NodeUa}[2]{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linecolor=white,linewidth=2pt,linestyle=dotted]}]
+{\psframebox[linecolor=white,linewidth=2pt]
+{\parbox[c]{#1}{\centering\shortstack{\black{#2}}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NodeULa}[2]{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linecolor=black,linewidth=1pt,linestyle=solid]}]
+{\psframebox[linecolor=white,linewidth=2pt]{\parbox[c]{#1}
+{\centering\shortstack{\black{#2}}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NodeUDa}[2]{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linecolor=black,linewidth=2pt,linestyle=dotted]}]
+{\psframebox[linecolor=white,linewidth=2pt]{\parbox[c]{#1}
+{\centering\shortstack{\black{#2}}}}}
+\psset{linecolor=black}}
+
+
+\newcommand{\NodeATa}[4]{
+\pstree{\TCircle[radius=#1,linecolor=red,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\centering\shortstack{#3}}}
+{\pstree[thislevelsep=-.2,linestyle=none]
+{\Tfan[cornersize=absolute,linearc=\corner,
+linewidth=2pt,linecolor=black,fansize=#2]}{
+\Tr{\centering\shortstack{#4}}
+}}
+}
+
+\newcommand{\NodeACTa}[4]{
+\pstree{\TCircle[radius=#1,linecolor=red,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\shortstack{#3}}}
+{\pstree[thislevelsep=-.2,linestyle=none]
+{\Tfan[cornersize=absolute,linearc=\corner,
+linewidth=2pt,linecolor=black,fansize=#2]}{
+\Tr{\centering\shortstack{#4}}
+}}
+}
+
+\newcommand{\NodeBTa}[4]{
+\pstree{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{#1}{\centering\shortstack{#3}}}}
+\psset{linecolor=black}}
+{\pstree[thislevelsep=-.2,linestyle=none]{\Tfan[cornersize=absolute, 
+linearc=\corner,linewidth=2pt,linecolor=black,fansize=#2]}{
+\Tr{\centering\shortstack{#4}}
+}}
+}
+
+\newcommand{\NodeBCTa}[4]{
+\pstree{\Tr[linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{#1}{\centering\shortstack{#3}}}}
+\psset{linecolor=black}}
+{\pstree[thislevelsep=-.2,linestyle=none]{\Tfan[cornersize=absolute, 
+linearc=\corner,linewidth=2pt,linecolor=black,fansize=#2]}{
+\Tr{\centering\shortstack{#4}}
+}}
+}
+
+\renewcommand{\psedge}{\ncline[]}
+%This is important to allow the same behaviour in Linux as well as in Windows.
+%In an older version of PSTricks.
+
+
+%------------------------------------------------------------------------------
+%Standard nodes with an identifier to create arcs
+%\NNodeA{arg1}{arg2}
+%\NNodeAC{arg1}{arg2}
+%\NNodeB{arg1}{arg2}
+%\NNodeBC{arg1}{arg2}
+
+%\NNodeAT{arg1}{arg2}{arg3}
+%\NNodeACT{arg1}{arg2}{arg3}
+%\NNodeBT{arg1}{arg2}{arg3}
+%\NNodeBCT{arg1}{arg2}{arg3}
+
+\newcommand{\NNodeA}[2]{\TCircle[name=#1,radius=0.6\pbs,linecolor=red,
+linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\centering\shortstack{#2}}}
+
+\newcommand{\NNodeAC}[2]{\TCircle[name=#1,radius=0.6\pbs,linecolor=red,
+linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\centering\shortstack{#2}}}
+
+\newcommand{\NNodeB}[2]{\Tr[name=#1,linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{\pbs}{\centering\shortstack{#2}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NNodeBC}[2]{\Tr[name=#1,linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{\pbs}{\centering\shortstack{#2}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NNodeAT}[3]{
+\pstree{\TCircle[name=#1, 
+radius=0.6\pbs,linecolor=red,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\centering\shortstack{#2}}}
+{\pstree[thislevelsep=-.2,linestyle=none]
+{\Tfan[cornersize=absolute,linearc=\corner,linewidth=2pt,
+linecolor=black,fansize=1.3\pbs]}{
+\Tr{\centering\shortstack{#3}}
+}}
+}
+
+\newcommand{\NNodeACT}[3]{
+\pstree{\TCircle[name=#1, radius=0.6\pbs,linecolor=red,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\shortstack{#2}}}
+{\pstree[thislevelsep=-.2,linestyle=none]
+{\Tfan[cornersize=absolute,linearc=\corner,linewidth=2pt,
+linecolor=black,fansize=1.3\pbs]}{
+\Tr{\centering\shortstack{#3}}
+}}
+}
+
+\newcommand{\NNodeBT}[3]{
+\pstree{\Tr[name=#1, linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{\pbs}{\centering\shortstack{#2}}}}
+\psset{linecolor=black}}
+{\pstree[thislevelsep=-.2,linestyle=none]
+{\Tfan[cornersize=absolute,linearc=\corner,linewidth=2pt,
+linecolor=black,fansize=1.3\pbs]}{
+\Tr{\centering\shortstack{#3}}
+}}
+}
+
+\newcommand{\NNodeBCT}[3]{
+\pstree{\Tr[name=#1, linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{\pbs}{\centering\shortstack{#2}}}}
+\psset{linecolor=black}}
+{\pstree[thislevelsep=-.2,linestyle=none]
+{\Tfan[cornersize=absolute,linearc=\corner,linewidth=2pt,
+linecolor=black,fansize=1.3\pbs]}{
+\Tr{\centering\shortstack{#3}}
+}}
+}
+
+\newcommand{\NNodeUL}[2]{\Tr[name=#1,linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linecolor=black]}]{\psframebox[linecolor=white,
+linewidth=2pt]{\parbox[c]{\pbs}{\centering\shortstack{\black{#2}}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NNodeUD}[2]{\Tr[name=#1,linecolor=white,linewidth=2pt,
+edge={\ncline[linecolor=black,linewidth=2pt,linestyle=dotted]}]
+{\psframebox[linecolor=white,linewidth=2pt]{\parbox[c]{\pbs}
+{\centering\shortstack{\black{#2}}}}}
+\psset{linecolor=black}}
+
+
+%------------------------------------------------------------------------------
+% Smaller nodes with identifiers
+
+%\NNodeAsmall{arg1}{arg2}
+%\NNodeACsmall{arg1}{arg2}
+%\NNodeBsmall{arg1}{arg2}
+%\NNodeBCsmall{arg1}{arg2}
+
+%\NNodeAT{arg1}{arg2}{arg3}
+%\NNodeACT{arg1}{arg2}{arg3}
+%\NNodeBT{arg1}{arg2}{arg3}
+%\NNodeBCT{arg1}{arg2}{arg3}
+
+\newcommand{\NNodeAsmall}[2]{\TCircle[name=#1,radius=0.3\pbs,linecolor=red,
+linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\centering\shortstack{#2}}}
+
+\newcommand{\NNodeACsmall}[2]{\TCircle[name=#1,radius=0.3\pbs,linecolor=red,
+linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\centering\shortstack{#2}}}
+
+\newcommand{\NNodeBsmall}[2]{\Tr[name=#1,linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{0.5\pbs}{\centering\shortstack{#2}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NNodeBCsmall}[2]{\Tr[name=#1,linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{0.5\pbs}{\centering\shortstack{#2}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NNodeATsmall}[3]{
+\pstree{\TCircle[name=#1, 
+radius=0.3\pbs,linecolor=red,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\centering\shortstack{#2}}}
+{\pstree[thislevelsep=-.2,linestyle=none]
+{\Tfan[cornersize=absolute,linearc=\corner,linewidth=2pt,
+linecolor=black,fansize=.65\pbs]}{
+\Tr{\centering\shortstack{#3}}
+}}
+}
+
+\newcommand{\NNodeACTsmall}[3]{
+\pstree{\TCircle[name=#1, radius=0.3\pbs,linecolor=red,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\centering\shortstack{#2}}}
+{\pstree[thislevelsep=-.2,linestyle=none]
+{\Tfan[cornersize=absolute,linearc=\corner,linewidth=2pt,
+linecolor=black,fansize=.65\pbs]}{
+\Tr{\centering\shortstack{#3}}
+}}
+}
+
+\newcommand{\NNodeBTsmall}[3]{
+\pstree{\Tr[name=#1, linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{.5\pbs}{\centering\shortstack{#2}}}}
+\psset{linecolor=black}}
+{\pstree[thislevelsep=-.2,linestyle=none]
+{\Tfan[cornersize=absolute,linearc=\corner,linewidth=2pt,
+linecolor=black,fansize=.65\pbs]}{
+\Tr{\centering\shortstack{#3}}
+}}
+}
+
+\newcommand{\NNodeBCTsmall}[3]{
+\pstree{\Tr[name=#1, linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{.5\pbs}{\centering\shortstack{#2}}}}
+\psset{linecolor=black}}
+{\pstree[thislevelsep=-.2,linestyle=none]
+{\Tfan[cornersize=absolute,linearc=\corner,linewidth=2pt,
+linecolor=black,fansize=.65\pbs]}{
+\Tr{\centering\shortstack{#3}}
+}}
+}
+
+\newcommand{\NNodeULsmall}[2]{\Tr[name=#1,linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linecolor=black]}]{\psframebox[linecolor=white,
+linewidth=2pt]{\parbox[c]{.5\pbs}{\centering\shortstack{\black{#2}}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NNodeUDsmall}[2]{\Tr[name=#1,linecolor=white,linewidth=2pt,
+edge={\ncline[linecolor=black,linewidth=2pt,linestyle=dotted]}]
+{\psframebox[linecolor=white,linewidth=2pt]{\parbox[c]{.5\pbs}
+{\centering\shortstack{\black{#2}}}}}
+\psset{linecolor=black}}
+
+%------------------------------------------------------------------------------
+% Adjustable Nodes with Identifiers
+
+%\NNodeAa{arg1}{arg2}{arg3}
+%\NNodeACa{arg1}{arg2}{arg3}
+%\NNodeBa{arg1}{arg2}{arg3}
+%\NNodeBCa{arg1}{arg2}{arg3}
+
+%\NNodeATa{arg1}{arg2}{arg3}{arg4}{arg5}
+%\NNodeACTa{arg1}{arg2}{arg3}{arg4}{arg5}
+%\NNodeBTa{arg1}{arg2}{arg3}{arg4}{arg5}
+%\NNodeBCTa{arg1}{arg2}{arg3}{arg4}{arg5}
+
+
+\newcommand{\NNodeAa}[3]{\TCircle[name=#1,radius=#2,linecolor=red,
+linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\centering\shortstack{#3}}}
+
+\newcommand{\NNodeACa}[3]{\TCircle[name=#1,radius=#2,linecolor=red,
+linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\centering\shortstack{#3}}}
+
+\newcommand{\NNodeBa}[3]{\Tr[name=#1,linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\psframebox[linearc=\corner,
+cornersize=absolute,linecolor=green,
+linewidth=2pt]{\parbox[c]{#2}{\centering\shortstack{#3}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NNodeBCa}[3]{\Tr[name=#1,linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\psframebox[linearc=\corner,
+cornersize=absolute,linecolor=green,
+linewidth=2pt]{\parbox[c]{#2}{\centering\shortstack{#3}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NNodeATa}[5]{
+\pstree{\TCircle[name=#1,radius=#2,linecolor=red,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\centering\shortstack{#4}}}
+{\pstree[thislevelsep=-.2,linestyle=none]
+{\Tfan[cornersize=absolute,linearc=\corner,
+linewidth=2pt,linecolor=black,fansize=#3]}{
+\Tr{\centering\shortstack{#5}}
+}}
+}
+
+\newcommand{\NNodeACTa}[5]{
+\pstree{\TCircle[name=#1,radius=#2,linecolor=red,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\centering\shortstack{#4}}}
+{\pstree[thislevelsep=-.2,linestyle=none]
+{\Tfan[cornersize=absolute,linearc=\corner,
+linewidth=2pt,linecolor=black,fansize=#3]}{
+\Tr{\centering\shortstack{#5}}
+}}
+}
+
+\newcommand{\NNodeBTa}[5]{
+\pstree{\Tr[name=#1,linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{#2}{\centering\shortstack{#4}}}}
+\psset{linecolor=black}}
+{\pstree[thislevelsep=-.2,linestyle=none]{\Tfan[cornersize=absolute, 
+linearc=\corner,linewidth=2pt,linecolor=black,fansize=#3]}{
+\Tr{\centering\shortstack{#5}}
+}}
+}
+
+\newcommand{\NNodeBCTa}[5]{
+\pstree{\Tr[name=#1,linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=2pt,linestyle=dotted]}]{\psframebox[linecolor=green,
+linearc=\corner,cornersize=absolute,
+linewidth=2pt]{\parbox[c]{#2}{\centering
+\shortstack{#4}}}}
+\psset{linecolor=black}}
+{\pstree[thislevelsep=-.2,linestyle=none]{\Tfan[cornersize=absolute, 
+linearc=\corner,linewidth=2pt,linecolor=black,fansize=#3]}{
+\Tr{\centering\shortstack{#5}}
+}}
+}
+
+\newcommand{\NNodeULa}[3]{\Tr[name=#1,linecolor=white,linewidth=2pt,
+edge={\ncline[linewidth=1pt,linecolor=black]}]{\psframebox[linecolor=white,
+linewidth=2pt]{\parbox[c]{#2}{\centering\shortstack{\black{#3}}}}}
+\psset{linecolor=black}}
+
+\newcommand{\NNodeUDa}[3]{\Tr[name=#1,linecolor=white,linewidth=2pt,
+edge={\ncline[linecolor=black,linewidth=2pt,linestyle=dotted]}]
+{\psframebox[linecolor=white,linewidth=2pt]{\parbox[c]{#2}
+{\centering\shortstack{\black{#3}}}}}
+\psset{linecolor=black}}
+
+
+
+%------------------------------------------------------------------------------
+%Arcs
+%To create AND-Nodes, the nodes have to have an identifier, such that the arc 
+%can be computed. Available arc commands
+
+%\Bogen{arg1}{arg2}{arg3}
+%\Bogenlhs{arg1}{arg2}{arg3}
+%\Bogenrhs{arg1}{arg2}{arg3}
+
+%\Arc{arg1}{arg2}{arg3}
+%\Arclhs{arg1}{arg2}{arg3}
+%\Arcrhs{arg1}{arg2}{arg3}
+
+%\Arcsmall{arg1}{arg2}{arg3}
+%\Arcsmalllhs{arg1}{arg2}{arg3}
+%\Arcsmallrhs{arg1}{arg2}{arg3}
+
+%\Arca{arg1}{arg2}{arg3}{arg4}
+%\Arclhsa{arg1}{arg2}{arg3}{arg4}
+%\Arcrhsa{arg1}{arg2}{arg3}{arg4}
+
+\def\Bogen#1#2#3{%
+\psarc[linecolor=black](#1){1.1cm}%
+  {!\psGetNodeCenter{#1} \psGetNodeCenter{#2} 
+    #1.y #2.y sub abs #1.x #2.x sub abs atan 180 add}%
+  {!\psGetNodeCenter{#3} 
+    #1.y #3.y sub abs #1.x #3.x sub abs atan neg 360 add}%
+}
+
+%Use this command if the AND-node symbol (arc) does not go past the 
+%``middle'', i.e. in the 4th quadrant use this command. For example if a node 
+%has 5 children and you want to connect only the first two.
+\def\Bogenlhs#1#2#3{%
+\psarc[linecolor=black](#1){1.1cm}%
+  {!\psGetNodeCenter{#1} \psGetNodeCenter{#2} 
+    #1.y #2.y sub abs #1.x #2.x sub abs atan 180 add}%
+  {!\psGetNodeCenter{#3} 
+    #1.y #3.y sub abs #1.x #3.x sub abs atan 180 add}%
+}
+
+%Use this command if the AND-node symbol (arc) is only in the 4th quadrant use 
+%this command. For example if a node has 5 children and you want to connect 
+%only the last two.
+\def\Bogenrhs#1#2#3{%
+\psarc[linecolor=black](#1){1.1cm}%
+  {!\psGetNodeCenter{#1} \psGetNodeCenter{#3} 
+    #1.y #3.y sub abs #1.x #3.x sub abs atan neg 360 add}%
+  {!\psGetNodeCenter{#2} 
+    #1.y #2.y sub abs #1.x #2.x sub abs atan neg 360 add}%
+}
+
+%Copy of Bogen command, for language consistency
+
+\def\Arc#1#2#3{%
+\psarc[linecolor=black](#1){0.73\pbs}%
+  {!\psGetNodeCenter{#1} \psGetNodeCenter{#2} 
+    #1.y #2.y sub abs #1.x #2.x sub abs atan 180 add}%
+  {!\psGetNodeCenter{#3} 
+    #1.y #3.y sub abs #1.x #3.x sub abs atan neg 360 add}%
+}
+
+\def\Arclhs#1#2#3{%
+\psarc[linecolor=black](#1){0.73\pbs}%
+  {!\psGetNodeCenter{#1} \psGetNodeCenter{#2} 
+    #1.y #2.y sub abs #1.x #2.x sub abs atan 180 add}%
+  {!\psGetNodeCenter{#3} 
+    #1.y #3.y sub abs #1.x #3.x sub abs atan 180 add}%
+}
+
+\def\Arcrhs#1#2#3{%
+\psarc[linecolor=black](#1){0.73\pbs}%
+  {!\psGetNodeCenter{#1} \psGetNodeCenter{#2} 
+    #1.y #2.y sub abs #1.x #2.x sub abs atan neg 360 add}%
+  {!\psGetNodeCenter{#3} 
+    #1.y #3.y sub abs #1.x #3.x sub abs atan neg 360 add}%
+}
+
+%small Arcs
+
+\def\Arcsmall#1#2#3{%
+\psarc[linecolor=black](#1){0.4\pbs}%
+  {!\psGetNodeCenter{#1} \psGetNodeCenter{#2} 
+    #1.y #2.y sub abs #1.x #2.x sub abs atan 180 add}%
+  {!\psGetNodeCenter{#3} 
+    #1.y #3.y sub abs #1.x #3.x sub abs atan neg 360 add}%
+}
+
+\def\Arclhssmall#1#2#3{%
+\psarc[linecolor=black](#1){0.36\pbs}%
+  {!\psGetNodeCenter{#1} \psGetNodeCenter{#2} 
+    #1.y #2.y sub abs #1.x #2.x sub abs atan 180 add}%
+  {!\psGetNodeCenter{#3} 
+    #1.y #3.y sub abs #1.x #3.x sub abs atan 180 add}%
+}
+
+\def\Arcrhssmall#1#2#3{%
+\psarc[linecolor=black](#1){0.36\pbs}%
+  {!\psGetNodeCenter{#1} \psGetNodeCenter{#2} 
+    #1.y #2.y sub abs #1.x #2.x sub abs atan neg 360 add}%
+  {!\psGetNodeCenter{#3} 
+    #1.y #3.y sub abs #1.x #3.x sub abs atan neg 360 add}%
+}
+
+%Adjustable arcs
+
+\def\Arca#1#2#3#4{%
+\psarc[linecolor=black](#2){#1}%
+  {!\psGetNodeCenter{#2} \psGetNodeCenter{#3} 
+    #2.y #3.y sub abs #2.x #3.x sub abs atan 180 add}%
+  {!\psGetNodeCenter{#4} 
+    #2.y #4.y sub abs #2.x #4.x sub abs atan neg 360 add}%
+}
+
+\def\Arclhsa#1#2#3#4{%
+\psarc[linecolor=black](#2){#1}%
+  {!\psGetNodeCenter{#2} \psGetNodeCenter{#3} 
+    #2.y #3.y sub abs #2.x #3.x sub abs atan 180 add}%
+  {!\psGetNodeCenter{#4} 
+    #2.y #4.y sub abs #2.x #4.x sub abs atan 180 add}%
+}
+
+\def\Arcrhsa#1#2#3#4{%
+\psarc[linecolor=black](#2){#1}%
+  {!\psGetNodeCenter{#2} \psGetNodeCenter{#3} 
+    #2.y #3.y sub abs #2.x #3.x sub abs atan neg 360 add}%
+  {!\psGetNodeCenter{#4} 
+    #2.y #4.y sub abs #2.x #4.x sub abs atan neg 360 add}%
+}
+
+
+%------------------------------------------------------------------------------
+%To draw the legend of the graphical ADTrees.
+%\A
+%\D
+%\C
+%\T
+%\DN
+%\ACC
+%\DCC
+%\TCC
+
+\newcommand{\A}{\mathop{\vcenter{\offinterlineskip 
+\hbox{\text{\color{red}$\bigcirc$}} }}}
+\newcommand{\D}{\mathop{\vcenter{\offinterlineskip 
+\hbox{\text{\color{green}$\square$}} }}}
+\newcommand{\C}{\mathop{\vcenter{\offinterlineskip 
+\hbox{\text{\color{black}$\Diamond$}} }}}
+\newcommand{\T}{\mathop{\vcenter{\offinterlineskip 
+\hbox{\text{\color{black}$\bigtriangleup$}} }}}
+\newcommand{\DN}{\mathop{\vcenter{\offinterlineskip 
+\hbox{\text{\color{black}\psframebox[linearc=.1,
+  cornersize=absolute,linecolor=green,linewidth=.5pt]{}}} }}}
+
+%Legend with thicker lines 
+\newcommand{\ACC}{\mathop{\vcenter{\offinterlineskip 
+\hbox{\TCircle[radius=0.17cm,linecolor=red,linewidth=1pt,
+edge={\ncline[linewidth=1pt,linestyle=solid]}]{}} }}}
+\newcommand{\DCC}{\mathop{\vcenter{\offinterlineskip 
+\hbox{\psframebox[
+%linearc=\corner,
+cornersize=absolute,linecolor=green,linewidth=1pt]{}} }}}
+\newcommand{\TCC}{\mathop{\vcenter{\offinterlineskip 
+\hbox{\psset{linecolor=black}
+\pstree[thislevelsep=0.25]{\Tr{}}{\Tfan[fansize=.25,linewidth=1pt]
+}}}}}
+
+\renewcommand{\psedge}{\ncline[]}
+
+
+
+%------------------------------------------------------------------------------
+%------------------------------------------------------------------------------
+% Textual syntax commands
+
+
+% Commands for drawing continuous textual syntax.
+% Overlapping symbols
+\newcommand{\mydash}{\rule[2.1pt]{6.4pt}{0.5pt}\;}
+\newcommand{\myeq}{\rule[3.2pt]{6.4pt}{0.5pt}%
+		     \hspace{-6.4pt}%
+		     \rule[1pt]{6.4pt}{0.5pt}\;}
+\newcommand{\myhash}{\rule[3.2pt]{6.4pt}{0.5pt}%
+		     \hspace{-6.4pt}%
+		     \rule[1pt]{6.4pt}{0.5pt}%
+		     \hspace{-2.6pt}%
+		     \rule[-2pt]{0.5pt}{8.4pt}%
+		     \hspace{-2.2pt}%
+		     \rule[-2pt]{0.5pt}{8.4pt}%
+		     \hspace{4.8pt}\;}
+
+%To set tab stops
+\newcommand{\mybar}{\rule[-9pt]{0.5pt}{24pt}}
+%Use following when not using frames
+%\newcommand{\mybar}{\rule[-1ex]{0.5pt}{3ex}}
+\newcommand{\bardist}{\rule{3.3ex}{0pt}}
+\newcommand{\startdist}{\rule{1.5ex}{0pt}}
+\newcommand{\settabs}{
+  \startdist \= \bardist \= \bardist \= \bardist \= \bardist \= \bardist \=
+  \bardist \= \bardist \= \bardist \= \bardist \= \bardist \= \bardist \= \kill
+}
+
+%Makes typing easier
+\newcommand{\onebar}{\mybar}
+\newcommand{\twobar}{\mybar\>\mybar}
+\newcommand{\threebar}{\mybar\>\mybar\>\mybar}
+\newcommand{\fourbar}{\mybar\>\mybar\>\mybar\>\mybar}
+\newcommand{\fivebar}{\mybar\>\mybar\>\mybar\>\mybar\>\mybar}
+
+%Node contents and colors
+\definecolor{mydarkgreen}{rgb}{0,0.70,0.10} 
+\newcommand{\attackframecolor}{red}
+\newcommand{\defenseframecolor}{mydarkgreen}
+\newcommand{\attacktextcolor}{black}
+\newcommand{\defensetextcolor}{black}
+%Use following two definitions to make text colored
+%\newcommand{\attacktextcolor}{red}
+%\newcommand{\defensetextcolor}{mydarkgreen}
+\newcommand{\setattackframecolor}[1]{\textcolor{\attackframecolor}{#1}}
+\newcommand{\setdefenseframecolor}[1]{\textcolor{\defenseframecolor}{#1}}
+\newcommand{\setattacktextcolor}[1]{\textcolor{\attacktextcolor}{#1}}
+\newcommand{\setdefensetextcolor}[1]{\textcolor{\defensetextcolor}{#1}}
+\newcommand{\leftattacksym}{\textbf{(}}
+\newcommand{\rightattacksym}{\textbf{)}}
+\newcommand{\leftdefensesym}{\textbf{[}}
+\newcommand{\rightdefensesym}{\textbf{]}}
+\newcommand{\attack}[1]{\psframebox[framearc=1,linecolor=\attackframecolor]
+{$\phantom{|}$#1$\phantom{|}$}}
+\newcommand{\defense}[1]{\psframebox[linecolor=\defenseframecolor]
+{$\phantom{|}$#1$\phantom{|}$}}
+%Use following to have no frames
+%\newcommand{\attack}[1]{\setattackframecolor{\leftattacksym}
+%\setattacktextcolor{#1}\setattackframecolor{\rightattacksym}}
+%\newcommand{\defense}[1]{\setdefenseframecolor{\leftdefensesym}
+%\setdefensetextcolor{#1}\setdefenseframecolor{\rightdefensesym}}
+
+
+
+%------------------------------------------------------------------------------
+%------------------------------------------------------------------------------
+%Original attribute domain symbols
+%$\CircleVee$
+%$\CircleWedge$
+%$\CircleX$
+%$\CircleEmpty$
+%$\BoxVee$
+%$\BoxWedge$
+%$\BoxX$
+%$\BoxEmpty$
+%$\CircleBox$
+%$\BoxCircle$ 
+
+\newcommand{\CircleVee}{\mathrel{\vcenter{\offinterlineskip 
+\hbox{\includegraphics[scale=0.21,clip]{CircleVee.eps}}}}}
+\newcommand{\CircleWedge}{\mathrel{\vcenter{\offinterlineskip 
+\hbox{\includegraphics[scale=0.21,clip]{CircleWedge.eps}}}}}
+\newcommand{\CircleX}{\mathrel{\vcenter{\offinterlineskip 
+\hbox{\includegraphics[scale=0.21,clip]{CircleX.eps}}}}}
+\newcommand{\CircleEmpty}{\mathrel{\vcenter{\offinterlineskip 
+\hbox{\includegraphics[scale=0.21,clip]{CircleEmpty.eps}}}}}
+\newcommand{\BoxVee}{\mathrel{\vcenter{\offinterlineskip 
+\hbox{\includegraphics[scale=0.21,clip]{BoxVee.eps}}}}}
+\newcommand{\BoxWedge}{\mathrel{\vcenter{\offinterlineskip 
+\hbox{\includegraphics[scale=0.21,clip]{BoxWedge.eps}}}}}
+\newcommand{\BoxX}{\mathrel{\vcenter{\offinterlineskip 
+\hbox{\includegraphics[scale=0.21,clip]{BoxX.eps}}}}}
+\newcommand{\BoxEmpty}{\mathrel{\vcenter{\offinterlineskip 
+\hbox{\includegraphics[scale=0.21,clip]{BoxEmpty.eps}}}}}
+\newcommand{\CircleBox}{\mathrel{\vcenter{\offinterlineskip 
+\hbox{\includegraphics[scale=0.21,clip]{CircleBox.eps}}}}}
+\newcommand{\BoxCircle}{\mathrel{\vcenter{\offinterlineskip 
+\hbox{\includegraphics[scale=0.21,clip]{BoxCircle.eps}}}}}
+
+
+%------------------------------------------------------------------------------
+%The commands needed for the operator version.
+\newcommand{\Circlephi}{\mathrel{\vcenter{\offinterlineskip 
+\hbox{\NodeAsmall{\raisebox{2.5pt}{$\phi(v)$}}}}}} %raisebox is dirty hack.
+\newcommand{\Boxphi}{\mathrel{ \vcenter{ \offinterlineskip 
+\hbox{\NodeBsmall{$\phi(v)$}}}} } 
+
+% And the corresponding math operators
+\DeclareMathOperator{\mathphi}{\phi(\text{$v$})}
+\DeclareMathOperator{\CP}{\Circlephi}
+\DeclareMathOperator{\BP}{\Boxphi}
+
+
+%------------------------------------------------------------------------------
+%To denote And and Or nodes with in typeset style
+\newcommand{\every}{{\tt and}}
+\newcommand{\one}{{\tt or}}
+
+
+
+%------------------------------------------------------------------------------
+%------------------------------------------------------------------------------
+%To draw arcs old version -- deprecated, kept for compatibility
+\newcommand{\makearc}[2]{\psarc(0,0){1.1cm}{#1}{#2}}
+\newcommand{\makesmallarc}[2]{\psarc(0,0){0.7cm}{#1}{#2}}
+\newcommand{\makeverysmallarc}[2]{\psarc(0,0){0.4cm}{#1}{#2}}
+
+
+%------------------------------------------------------------------------------
+%Old MathOperators
+
+\DeclareMathOperator{\Child}{Children}
+\DeclareMathOperator{\TYPE}{TYPE}
+\DeclareMathOperator{\CONN}{CONN}
+\DeclareMathOperator{\VAR}{VAR}
+\DeclareMathOperator{\Cu}{Cu}
+\DeclareMathOperator{\Tq}{Tq}
+\DeclareMathOperator{\Af}{Af}
+\DeclareMathOperator{\Tk}{Tk}
+\DeclareMathOperator{\Ca}{Ca}
+\DeclareMathOperator{\Gu}{Gu}
+\DeclareMathOperator{\Pa}{Pa}
+\DeclareMathOperator{\Br}{Br}
+\DeclareMathOperator{\Zo}{Zo}
